@@ -24,9 +24,11 @@ There are other projects and pages that you may be interested in:
  * [OpenDKIM][2]
  * [DMARC][3]
  * [DMARC-msys][4]
+ * [libpst][6] (for handling Outlook folders)
 
 [1]: http://dkfp.9vx.org/ "The DKIM Forensics Project"
 [2]: http://www.opendkim.org/ "OpenDKIM"
 [3]: http://www.dmarc.org/ "DMARC"
 [4]: https://github.com/linkedin/dmarc-msys "DMARC-msys"
 [5]: https://9vx.org/~dho/dkim_validate.php "dho's Online DKIM Verifier / DKIM Validation Tool"
+[6]: http://www.five-ten-sg.com/libpst/ "libpst"

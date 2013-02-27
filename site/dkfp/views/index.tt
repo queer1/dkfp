@@ -1,0 +1,32 @@
+        <h1>The DKIM Forensics Project</h1>
+        <h2>About the Project</h2>
+        <p>
+            I created a <a href="https://9vx.org/~dho/dkim_validate.php">DKIM
+            validation utility</a> in July of 2011. Since that time, it's been
+            used several times to prove culpability in various political
+            scandals, and I figured I could do more to help out with email
+            forensics. The goal of the DKIM Forensics Project is to provide a
+            useful and usable suite of utilities and information relating to
+            DKIM validation. This material will be made available for free to
+            the Internet at large.
+        </p>
+        <h2>Project Goals</h2>
+        <ul>
+            <li>Collect as many valid DKIM keys as possible.</li>
+            <li>Track key changes (valid dates, sizes, etc.) over time.</li>
+            <li>Provide interfaces and tools for validating signatures.</li>
+            <li>Provide interfaces for submitting new signatures.</li>
+        </ul>
+        <p>
+            Through achieving these goals, it will be possible to create a
+            robust framework by which security researchers and computer
+            forensic analysts can verify the validity of email correspondence.
+        </p>
+        <h2>Contributing</h2>
+        <p>
+            If you have corpuses of valid DKIM signatures, email them to
+            dkfp at dkfp.9vx.org. Additionally, defunct public keys for
+            popular senders are also appreciated. For code contributions,
+            contact devon.odell at gmail.com.
+        </p>
+

@@ -39,48 +39,48 @@ my $help = 0;
 my $resolution_mode = 0;
 
 my $args = GetOptions (
-    'dkim-keyfile|k:s'      => \$key_file,
-    'help|h'                => \$help,
-    'resolution-mode|r:s'   => \$resolution_mode,
+	'dkim-keyfile|k:s'      => \$key_file,
+	'help|h'                => \$help,
+	'resolution-mode|r:s'   => \$resolution_mode,
 );
 
 pod2usage(-exitstatus => 0, -verbose => 2) if $help;
 
 if ($resolution_mode == 1 && !defined $key_file) {
-    print STDERR "Must specify key file if --resolution-mode is set to 1\n";
-    exit -1;
+	print STDERR "Must specify key file if --resolution-mode is set to 1\n";
+	exit -1;
 }
 
 if (defined $key_file) {
-    open FH, "<$key_file" or die "Cannot read $key_file: $!\n";
+	open FH, "<$key_file" or die "Cannot read $key_file: $!\n";
 
-    $keycache = {};
+	$keycache = {};
 
-    while (<FH>) {
-        chomp;
-	    next if /^\s*$/ || /^\s*#/;
-        my ($k, $v) = split /\s+/, $_, 2;
-        next if (!$k or !$v);
-        $keycache->{$k} = [ bless \$v, "DKV::TXT" ];
-    }
+	while (<FH>) {
+		chomp;
+		next if /^\s*$/ || /^\s*#/;
+		my ($k, $v) = split /\s+/, $_, 2;
+		next if (!$k or !$v);
+		$keycache->{$k} = [ bless \$v, "DKV::TXT" ];
+	}
 }
 
 foreach (@ARGV) {
-    my $dkim = Mail::DKIM::Verifier->new();
-    my $file = $_;
+	my $dkim = Mail::DKIM::Verifier->new();
+	my $file = $_;
 
-    open FH, "<$_" or die "Can't open $_: $!\n";
-    while (<FH>) {
-        # Sanitize for great glory.
-        chomp;
-        s/\015$//;
-        $dkim->PRINT("$_\015\012");
-    }
+	open FH, "<$_" or die "Can't open $_: $!\n";
+	while (<FH>) {
+		# Sanitize for great glory.
+		chomp;
+		s/\015$//;
+		$dkim->PRINT("$_\015\012");
+	}
 
-    $dkim->CLOSE;
+	$dkim->CLOSE;
 
-    my $res = $dkim->result;
-    print "$file: $res\n";
+	my $res = $dkim->result;
+	print "$file: $res\n";
 }
 
 sub Mail::DKIM::DNS::dkv_query
@@ -88,25 +88,23 @@ sub Mail::DKIM::DNS::dkv_query
 	my ($domain, $type) = @_;
 	die "can't lookup $type record" if $type ne "TXT";
 
-    if ($resolution_mode == 1) {
-        return @{$keycache->{$domain}} if exists $keycache->{$domain} &&
-            ref $keycache->{$domain};
-        return Mail::DKIM::DNS::real_query($domain, $type);
-    } else {
+	if ($resolution_mode == 1) {
+		return @{$keycache->{$domain}} if exists $keycache->{$domain} && ref $keycache->{$domain};
+		return Mail::DKIM::DNS::real_query($domain, $type);
+	} else {
 		my @result = Mail::DKIM::DNS::real_query($domain, $type);
 
-        if (!@result) {
-            return @{$keycache->{$domain}} if exists $keycache->{$domain} &&
-                ref $keycache->{$domain};
-        }
+		if (!@result) {
+			return @{$keycache->{$domain}} if exists $keycache->{$domain} && ref $keycache->{$domain};
+		}
 
-        return;
-    }
+		return;
+	}
 }
 
 BEGIN {
-    *Mail::DKIM::DNS::real_query = *Mail::DKIM::DNS::query;
-    *Mail::DKIM::DNS::query = *Mail::DKIM::DNS::dkv_query;
+	*Mail::DKIM::DNS::real_query = *Mail::DKIM::DNS::query;
+	*Mail::DKIM::DNS::query = *Mail::DKIM::DNS::dkv_query;
 }
 
 package DKV::TXT;
@@ -134,8 +132,8 @@ dkv - DKIM Key Verifier
 dkv [options] [file1, file2, ..., fileN]
 
     Options:
-        --help 		This help message
-        --dkimkeys 	The file containing public keys.
+	--help 		This help message
+	--dkim-keyfile 	The file containing public keys.
 
 =head1 OPTIONS
 

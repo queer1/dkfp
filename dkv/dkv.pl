@@ -98,7 +98,7 @@ sub Mail::DKIM::DNS::dkv_query
 			return @{$keycache->{$domain}} if exists $keycache->{$domain} && ref $keycache->{$domain};
 		}
 
-		return;
+		return @result;
 	}
 }
 
